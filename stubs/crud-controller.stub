@@ -3,28 +3,25 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use GuzzleHttp\Client;
-use GuzzleHttp\Exception\RequestException;
+use Illuminate\Support\Facades\Http;
 
 class {{className}}Controller extends Controller
 {
-    protected $client;
     protected $baseUrl;
 
     public function __construct()
     {
-        $this->client = new Client();
         $this->baseUrl = 'http://localhost:8080';
     }
 
     public function index()
     {
         try {
-            $response = $this->client->get("{$this->baseUrl}/{{resource}}");
-            $data = json_decode($response->getBody(), true);
+            $response = Http::get("{$this->baseUrl}/{{resource}}");
+            $data = $response->json();
 
             return view('admin.{{resource}}.index', ['{{resource}}' => $data]);
-        } catch (RequestException $e) {
+        } catch (\Exception $e) {
             return back()->with('error', 'Failed to fetch data: ' . $e->getMessage());
         }
     }
@@ -41,12 +38,10 @@ class {{className}}Controller extends Controller
         ]);
 
         try {
-            $this->client->post("{$this->baseUrl}/{{resource}}", [
-                'json' => $request->only([{{requestFields}}]),
-            ]);
+            Http::asForm()->post("{$this->baseUrl}/{{resource}}", $request->only([{{requestFields}}]));
 
             return redirect()->route('{{resource}}.index')->with('success', '{{className}} berhasil ditambahkan');
-        } catch (RequestException $e) {
+        } catch (\Exception $e) {
             return back()->with('error', 'Failed to add data: ' . $e->getMessage())->withInput();
         }
     }
@@ -54,11 +49,11 @@ class {{className}}Controller extends Controller
     public function edit($id)
     {
         try {
-            $response = $this->client->get("{$this->baseUrl}/{{resource}}/{$id}");
-            $data = json_decode($response->getBody(), true);
+            $response = Http::get("{$this->baseUrl}/{{resource}}/{$id}");
+            $data = $response->json();
 
             return view('admin.{{resource}}.edit', ['{{resource}}' => $data]);
-        } catch (RequestException $e) {
+        } catch (\Exception $e) {
             return back()->with('error', 'Failed to fetch data: ' . $e->getMessage());
         }
     }
@@ -70,12 +65,10 @@ class {{className}}Controller extends Controller
         ]);
 
         try {
-            $this->client->put("{$this->baseUrl}/{{resource}}/{$id}", [
-                'json' => $request->only([{{requestFields}}]),
-            ]);
+            Http::asForm()->put("{$this->baseUrl}/{{resource}}/{$id}", $request->only([{{requestFields}}]));
 
             return redirect()->route('{{resource}}.index')->with('success', '{{className}} berhasil diperbarui');
-        } catch (RequestException $e) {
+        } catch (\Exception $e) {
             return back()->with('error', 'Failed to update data: ' . $e->getMessage())->withInput();
         }
     }
@@ -83,10 +76,10 @@ class {{className}}Controller extends Controller
     public function destroy($id)
     {
         try {
-            $this->client->delete("{$this->baseUrl}/{{resource}}/{$id}");
+            Http::delete("{$this->baseUrl}/{{resource}}/{$id}");
 
             return redirect()->route('{{resource}}.index')->with('success', '{{className}} berhasil dihapus');
-        } catch (RequestException $e) {
+        } catch (\Exception $e) {
             return back()->with('error', 'Failed to delete data: ' . $e->getMessage());
         }
     }

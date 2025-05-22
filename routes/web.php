@@ -54,3 +54,5 @@ Route::resource('lima', App\Http\Controllers\LimaController::class);
 Route::resource('satu', App\Http\Controllers\SatuController::class);
 
 Route::resource('jfklasjdf', App\Http\Controllers\JfklasjdfController::class);
+
+Route::resource('matkul', App\Http\Controllers\MatkulController::class);

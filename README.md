@@ -16,19 +16,14 @@ Proyek ini adalah aplikasi Laravel dengan fitur **generator CRUD otomatis** meng
 1. **Clone repositori:**
 
    ```bash
-   git clone <url-repo-ini>
-   cd <nama-folder>
+   git clone git@github.com:Arya0D/laravel-arya.git
+   cd laravel-arya
    ```
 2. **Install dependency:**
    ```bash
    conposer install
    ```
 3. **Copy dan edit file environment::**
-   ```bash
-   cp .env.example .env
-   php artisan key:generate
-   ```
-4. **Install dependency:**
    ```bash
    cp .env.example .env
    php artisan key:generate

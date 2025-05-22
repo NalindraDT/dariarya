@@ -18,3 +18,41 @@ Proyek ini adalah aplikasi Laravel dengan fitur **generator CRUD otomatis** meng
    ```bash
    git clone <url-repo-ini>
    cd <nama-folder>
+   ```
+2. **Install dependency:**
+   ```bash
+   conposer install
+   ```
+3. **Copy dan edit file environment::**
+   ```bash
+   cp .env.example .env
+   php artisan key:generate
+   ```
+4. **Install dependency:**
+   ```bash
+   cp .env.example .env
+   php artisan key:generate
+   ```
+
+## ✨ Cara Menggunakan Generator
+  ```bash
+  php artisan make:crud-controller Dosen --fields=nama:string,nidn:string,email:email,prodi:string
+   ```
+Command di atas akan menghasilkan:
+- app/Http/Controllers/DosenController.php -> Controller CRUD untuk dosen
+- Route resource ```Route::resource('dosen', DosenController::class);```
+- Views:
+
+## 📂 Struktur Direktori Views
+
+## 🧪 Testing
+- Jalankan server Laravel:
+```
+php artisan serve
+```
+Buka ```http://localhost:8000/dosen``` untuk melihat halaman CRUD yang dibuat.
+
+- Debuging:
+
+
+  
